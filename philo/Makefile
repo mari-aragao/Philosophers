@@ -7,7 +7,7 @@ SRCS	=	\
 
 INCLUDES	= ./includes
 
-CC	= -Wall -Wextra -Werror
+CC	= -Wall -Wextra -Werror -g
 
 ${NAME}:	${SRCS}	
 	cc ${CC} -I ${INCLUDES} ${SRCS} -o ${NAME}

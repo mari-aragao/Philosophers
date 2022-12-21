@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 22:09:49 by maragao           #+#    #+#             */
-/*   Updated: 2022/12/21 12:54:53 by maragao          ###   ########.fr       */
+/*   Updated: 2022/12/21 13:28:29 by maragao          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,39 @@ void	init_vars(int argc, char **argv, t_vars *vars)
 		vars->times_to_eat = ft_atoi(argv[5]);
 }
 
+void	*start(void *i)
+{
+	int philo;
+
+	philo = *(int *)i;
+	printf("Philosopher %i says hello!\n", philo);
+	free (i);
+	return ((void *) NULL);
+}
+
 int	main(int argc, char **argv)
 {
-	t_vars	vars;
+	int		i;
+	t_vars		vars;
+	pthread_t	philo[5];
 
 	if (all_checks(argc, argv) == -1)
 		return(-1);
 	init_vars(argc, argv, &vars);
-
-	printf("n_philo = %d\n", vars.n_philo);
+	i = 0;
+	while (i < vars.n_philo)
+	{
+		int *temp = malloc(sizeof(int));
+		if (!temp)
+			return (0);
+		*temp = i;
+		pthread_create(&philo[i], NULL, &start, temp);
+		i++;
+	}
+/*	printf("n_philo = %d\n", vars.n_philo);
 	printf("die = %d\n", vars.die);
 	printf("eat = %d\n", vars.eat);
 	printf("sleep = %d\n", vars.sleep);
 	printf("times_to_eat = %d\n", vars.times_to_eat);
-	return(0);	
+*/	return(0);	
 }
