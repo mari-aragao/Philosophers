@@ -29,12 +29,12 @@ int	all_checks(int argc, char **argv)
 		write(2, "Error\n", 6);
 		return (-1);
 	}
-/*	if (check_bigger_than_zero(argv) == -1)
+	if (check_bigger_than_zero(argv) == -1)
 	{
 		write(2, "Error esse\n", 11);
 		return (-1);
 	}
-*/	return (0);
+	return (0);
 }
 
 int	check_positive_number(char **argv)
@@ -42,7 +42,7 @@ int	check_positive_number(char **argv)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	while (argv[i])
 	{
 		j = 0;
@@ -62,7 +62,7 @@ int	check_bigger_than_zero(char **argv)
 	int i;
 	int temp;
 
-	i = 0;
+	i = 1;
 	while (argv[i])
 	{
 		temp = ft_atoi(argv[i]);
