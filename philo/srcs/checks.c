@@ -14,14 +14,27 @@
 
 int	all_checks(int argc, char **argv)
 {
-	if (argc <= 4 || argc >= 7)
+	if (argc < 5 || argc > 6)
+	{	
+		write(2, "Error\n", 6);
 		return (-1);
+	}
+	if (ft_atoi(argv[1]) < 1)
+	{
+		write(2, "Error\n", 6);
+		return (-1);
+	}
 	if (check_positive_number(argv) == -1)
 	{
 		write(2, "Error\n", 6);
 		return (-1);
 	}
-	return (0);
+/*	if (check_bigger_than_zero(argv) == -1)
+	{
+		write(2, "Error esse\n", 11);
+		return (-1);
+	}
+*/	return (0);
 }
 
 int	check_positive_number(char **argv)
@@ -29,20 +42,32 @@ int	check_positive_number(char **argv)
 	int	i;
 	int	j;
 
-	i = 1;
+	i = 0;
 	while (argv[i])
 	{
 		j = 0;
 		while (argv[i][j])
 		{
-			if (!(is_digit(argv[i][j])) && argv[i][j] != '+')
-				return (-1);
-			if (j != 0 && (argv[i][j] == '+'))
-				return (-1);
-			if (j == 0 && argv[i][j] == '+' && (!(is_digit(argv[i][1]))))
+			if (argv[i][j] < '0' && argv[i][j] > '9')
 				return (-1);
 			j++;
 		}
+		i++;
+	}
+	return (0);
+}
+
+int	check_bigger_than_zero(char **argv)
+{
+	int i;
+	int temp;
+
+	i = 0;
+	while (argv[i])
+	{
+		temp = ft_atoi(argv[i]);
+		if (temp < 1)
+			return (-1);
 		i++;
 	}
 	return (0);

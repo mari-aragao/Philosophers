@@ -7,7 +7,7 @@ SRCS	=	\
 
 INCLUDES	= ./includes
 
-CC	= -Wall -Wextra -Werror -g
+CC	= -Wall -Wextra -Werror -pthread -g 
 
 ${NAME}:	${SRCS}	
 	cc ${CC} -I ${INCLUDES} ${SRCS} -o ${NAME}
