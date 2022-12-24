@@ -53,6 +53,6 @@ int	all_checks(int argc, char **argv);
 int	check_positive_number(char **argv);
 int	check_bigger_than_zero(char **argv);
 t_philo	*init_vars(int argc, char **argv);
-void	init_parameters(int argc, char **argv, int id, t_philo *philo);
+t_philo	*init_parameters(int argc, char **argv, t_philo *philo, int total);
 
 #endif
