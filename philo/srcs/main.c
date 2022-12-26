@@ -12,12 +12,32 @@
 
 #include "philo.h"
 
+t_mutex	*init_mutex(void)
+{
+	t_mutex	*mutex;
+
+	mutex = (t_mutex *)malloc(sizeof(t_mutex));
+	pthread_mutex_init(&mutex->print, NULL);
+	pthread_mutex_init(&mutex->forks, NULL);
+	return (mutex);
+}
+
+void	destroy_mutex(t_mutex *mutex)
+{
+	pthread_mutex_destroy(&mutex->print);
+	pthread_mutex_destroy(&mutex->forks);
+	free(mutex);
+}
+
 t_philo	*init_philo(int argc, char **argv)
 {
 	int	total;
 	t_philo	*ph;
 
 	total = ft_atoi(argv[1]);
+//	(void)argc;
+//	(void)argv;
+//	total = 5;
 	ph = (t_philo *)malloc(sizeof(t_philo) * total);
 	if (!ph)
 		return (NULL);
@@ -47,8 +67,6 @@ t_philo	*init_parameters(int argc, char **argv, t_philo *ph, int total)
 		j = 0;
 		while(j < ph[i].total_philos)
 			ph[i].arr_forks[j++] = 0;
-		ph[i].f_left = 0;
-		ph[i].f_right = 0;
 		i++;
 	}
 	return (ph);
@@ -57,13 +75,20 @@ t_philo	*init_parameters(int argc, char **argv, t_philo *ph, int total)
 int	main(int argc, char **argv)
 {
 	t_philo		*ph;
+	t_mutex		*mutex;
 
 	if (all_checks(argc, argv) == -1)
 		return(-1);
 	ph = init_philo(argc, argv);
 	if (ph == NULL)
 		return(-1);
+	mutex = init_mutex();
+	if (!mutex)
+		return (-1);
+	pthread_mutex_lock(&mutex->print);
+	
 	int i = 0;
+
 	while(i < ph[i].total_philos)
 	{
 	printf("\n\n");
@@ -75,10 +100,14 @@ int	main(int argc, char **argv)
 	printf("meals_to_make = %i\n", ph[i].meals_to_make);
 	printf("meal_counter = %i\n", ph[i].meal_counter);
 	printf("stop = %i\n", ph[i].stop);
-	printf("f_left = %i\n", ph[i].f_left);
-	printf("f_right = %i\n", ph[i].f_right);
 	printf("\n\n");
+	pthread_mutex_lock(&mutex->forks);
+	ph[i].arr_forks[i] = 1;
+	pthread_mutex_unlock(&mutex->forks);
+	printf("arr_forks[%i] = %i\n", i, ph[i].arr_forks[i]);
+	pthread_mutex_unlock(&mutex->print);
 	i++;
 	}
+	destroy_mutex(mutex);
 	return(0);	
 }
