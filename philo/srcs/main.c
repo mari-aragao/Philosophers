@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	if (!mutex)
 		return (-1);
 	pthread_mutex_lock(&mutex->print);
-	
+/*	
 	int i = 0;
 
 	while(i < ph[i].total_philos)
@@ -50,5 +50,6 @@ int	main(int argc, char **argv)
 	}
 	destroy_mutex(mutex);
 	destroy_philo(ph);
+*/
 	return(0);	
 }

@@ -26,6 +26,7 @@ typedef	struct	s_mutex
 
 typedef struct	s_philo
 {
+	
 	int		philo_id;
 	int		total_philos;
 	int		time_to_die;
@@ -36,6 +37,9 @@ typedef struct	s_philo
 	int		stop;
 	int		*arr_forks;
 	pthread_t	philo;
+	long int	start;
+	long int	actual_time;
+	long int	last_meal;
 }		t_philo;
 
 /*
@@ -56,5 +60,6 @@ t_philo	*init_parameters(int argc, char **argv, t_philo *philo, int total);
 t_mutex	*init_mutex(void);
 void	destroy_mutex(t_mutex *mutex);
 void	destroy_philo(t_philo *ph);
+long int	get_time(void);
 
 #endif
