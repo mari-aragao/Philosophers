@@ -29,6 +29,19 @@ void	destroy_mutex(t_mutex *mutex)
 	free(mutex);
 }
 
+void	destroy_philo(t_philo *ph)
+{
+	int i;
+
+	i = 0;
+	while (i < ph[i].total_philos)
+	{
+		free(ph[i].arr_forks);
+		i++;
+	}
+	free(ph);
+}
+
 t_philo	*init_philo(int argc, char **argv)
 {
 	int	total;
@@ -109,5 +122,6 @@ int	main(int argc, char **argv)
 	i++;
 	}
 	destroy_mutex(mutex);
+	destroy_philo(ph);
 	return(0);	
 }

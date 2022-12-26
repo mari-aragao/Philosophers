@@ -55,5 +55,6 @@ t_philo	*init_vars(int argc, char **argv);
 t_philo	*init_parameters(int argc, char **argv, t_philo *philo, int total);
 t_mutex	*init_mutex(void);
 void	destroy_mutex(t_mutex *mutex);
+void	destroy_philo(t_philo *ph);
 
 #endif
