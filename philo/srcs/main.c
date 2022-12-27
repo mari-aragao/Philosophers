@@ -12,90 +12,64 @@
 
 #include "philo.h"
 
-int     init_threads(t_all *all)
+void	*routine(void *ph)
 {
-        int i;
+	t_philo	ph2;
 
-        i = 0;
-        while (i < all->ph->total)
-        {
-                if (pthread_create(&all->ph[i].th, NULL, &routine, (void *)all) != 0)
-                {
-                        printf("Failed to create thread");
-                        return (-1);
-                }
-                printf("\nThread %d has started\n", i);
-//		pthread_detach(all->ph[i].th);
-                i++;
-        }
-        i = 0;
-        while (i < all->ph->total)
-        {
-                if (pthread_join(all->ph[i].th, NULL) != 0)
-                {
-                        printf("Failed to join thread");
-                        return (-1);
-                }
-                i++;
-       }
-       return (0);
-}
-
-void	*routine(void *all)
-{
-	t_all	*all2;
-
-	all2 = (t_all *)all;
-	if (all2->ph->id % 2 == 0)
-		usleep(200);
-	take_forks(all2);
-	print(all, FORK);
-	eating(all2);
-	print(all, EAT);
-	drop_forks(all2);
-	print(all, SLEEP);
+	ph2 = *(t_philo *)ph;
+	if (ph2.id % 2 == 0)
+		usleep(500);
+	take_forks(ph2);
+	if (ph.vars->arr_fk[ph.id] == 1)
+	print(ph2, FORK);
+//	eating(ph2);
+//	print(ph2, EAT);
+//	drop_forks(ph2);
+//	print(ph2, SLEEP);
 	return (NULL);
 }
 
 int	main(int argc, char **argv)
 {
-	t_all		*all;
+	t_philo		*ph;
 
 //	if (all_checks(argc, argv) == -1)
 //		return(-1);
-	all = init_all(argc, argv);
-	if (all == NULL)
+	ph = init_all(argc, argv);
+	if (ph == NULL)
 		return(-1);
-	
-/*	int i = 0;
+/*
+	int i = 0;
 
-	while(i < all->ph[i].total)
+	while(i < 5)
 	{
 	printf("\n\n");
-	printf("philo_id = %i\n", all->ph[i].id);
-	printf("total = %i\n", all->ph[i].total);
-	printf("time_to_die = %i\n", all->ph[i].time_to_die);
-	printf("time_to_eat = %i\n", all->ph[i].time_to_eat);
-	printf("time_to_sleep = %i\n", all->ph[i].time_to_sleep);
-	printf("meals_to_make = %i\n", all->ph[i].meals_to_make);
-	printf("meal_counter = %i\n", all->ph[i].meal_counter);
-	printf("stop = %i\n", all->ph[i].stop);
+	printf("PHILOS:\n");
+	printf("id = %i\n", ph[i].id);
+	printf("meal_cntr = %i\n", ph[i].meal_cntr);
+	printf("stop = %i\n", ph[i].stop);
+	printf("st_time = %ld\n", ph[i].st_time);
+	printf("ac_time = %ld\n", ph[i].ac_time);
+	printf("last_meal = %ld\n", ph[i].last_meal);
+	
+	printf("VARS:\n");
+	printf("total = %i\n", ph[i].vars->total);
+	printf("time_to_die = %i\n", ph[i].vars->time_to_die);
+	printf("time_to_eat = %i\n", ph[i].vars->time_to_eat);
+	printf("time_to_sleep = %i\n", ph[i].vars->time_to_sleep);
+	printf("meals_to_make = %i\n", ph[i].vars->meals_to_make);
+	int j = 0;
+	while (j < 5)
+	{
+		printf("\n\nmutex_arr_forks[%i] = %i", j, ph[i].vars->arr_fk[j]);
+		j++;
+	}
 	printf("\n\n");
 	i++;
 	}
 	
-*/	
-	init_threads(all);
-
-	int i = 0;
-	while (i < all->ph[i].total)
-	{
-		printf("\n\nmutex_arr_forks[%i] = %i", i, all->mutex->arr_forks[i]);
-		i++;
-	}
-	printf("\n000xxx000\n");
-	//destroy_mutex((all)->ph->total, (all)->mutex);
-	//destroy_philo((all)->ph);
-
+*/
+	init_threads(ph);
+	destroy_all(ph->vars->total, ph);
 	return(0);	
 }
