@@ -12,44 +12,42 @@
 
 #include "philo.h"
 
+void	*routine(void *all)
+{
+	(void)all;
+	printf("\nRoutine\n");
+	return (NULL);
+}
+
 int	main(int argc, char **argv)
 {
-	t_philo		*ph;
-	t_mutex		*mutex;
+	t_all		*all;
 
 	if (all_checks(argc, argv) == -1)
 		return(-1);
-	ph = init_philo(argc, argv);
-	if (ph == NULL)
+	all = init_all(argc, argv);
+	if (all == NULL)
 		return(-1);
-	mutex = init_mutex();
-	if (!mutex)
-		return (-1);
-	pthread_mutex_lock(&mutex->print);
-/*	
+//	pthread_mutex_lock(&mutex->print);
+	
 	int i = 0;
 
-	while(i < ph[i].total_philos)
+	while(i < all->ph[i].total)
 	{
 	printf("\n\n");
-	printf("philo_id = %i\n", ph[i].philo_id);
-	printf("total_philos = %i\n", ph[i].total_philos);
-	printf("time_to_die = %i\n", ph[i].time_to_die);
-	printf("time_to_eat = %i\n", ph[i].time_to_eat);
-	printf("time_to_sleep = %i\n", ph[i].time_to_sleep);
-	printf("meals_to_make = %i\n", ph[i].meals_to_make);
-	printf("meal_counter = %i\n", ph[i].meal_counter);
-	printf("stop = %i\n", ph[i].stop);
+	printf("philo_id = %i\n", all->ph[i].id);
+	printf("total = %i\n", all->ph[i].total);
+	printf("time_to_die = %i\n", all->ph[i].time_to_die);
+	printf("time_to_eat = %i\n", all->ph[i].time_to_eat);
+	printf("time_to_sleep = %i\n", all->ph[i].time_to_sleep);
+	printf("meals_to_make = %i\n", all->ph[i].meals_to_make);
+	printf("meal_counter = %i\n", all->ph[i].meal_counter);
+	printf("stop = %i\n", all->ph[i].stop);
 	printf("\n\n");
-	pthread_mutex_lock(&mutex->forks);
-	ph[i].arr_forks[i] = 1;
-	pthread_mutex_unlock(&mutex->forks);
-	printf("arr_forks[%i] = %i\n", i, ph[i].arr_forks[i]);
-	pthread_mutex_unlock(&mutex->print);
 	i++;
 	}
-	destroy_mutex(mutex);
-	destroy_philo(ph);
-*/
+//	destroy_mutex(all->ph->total, all->mutex);
+//	destroy_philo(all->ph);
+
 	return(0);	
 }

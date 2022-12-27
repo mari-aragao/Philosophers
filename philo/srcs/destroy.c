@@ -1,21 +1,22 @@
 #include "philo.h"
 
-void    destroy_mutex(t_mutex *mutex)
+void    destroy_mutex(int total, t_mutex *mutex)
 {
+	int	i;
+
         pthread_mutex_destroy(&mutex->print);
-        pthread_mutex_destroy(&mutex->forks);
+        i = 0;
+	while (i < total)
+	{
+		pthread_mutex_destroy(&mutex->forks[i]);
+		i++;
+	}
+//	free(mutex->print);
+//	free(mutex->forks);
         free(mutex);
 }
 
 void    destroy_philo(t_philo *ph)
 {
-        int i;
-
-        i = 0;
-        while (i < ph[i].total_philos)
-        {
-                free(ph[i].arr_forks);
-                i++;
-        }
         free(ph);
 }
