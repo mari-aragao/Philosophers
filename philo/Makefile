@@ -2,6 +2,7 @@ NAME	=	philo
 
 SRCS	=	\
 		./srcs/main.c \
+		./srcs/actions.c \
 		./srcs/destroy.c \
 		./srcs/init.c \
 		./srcs/utils.c \

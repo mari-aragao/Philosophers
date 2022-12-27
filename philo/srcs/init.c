@@ -60,6 +60,7 @@ t_mutex *init_mutex(int total)
 
 t_philo *init_philo(int argc, char **argv)
 {
+	int	i;
         int     total;
         t_philo *ph;
 
@@ -67,6 +68,14 @@ t_philo *init_philo(int argc, char **argv)
         ph = (t_philo *)malloc(sizeof(t_philo) * total);
         if (!ph)
                 return (NULL);
+	i = 0;
+	while (i < total)
+	{
+		ph[i].arr_forks = malloc(sizeof(int) * total);
+		if (!ph[i].arr_forks)
+			return (NULL);
+		i++;
+	}
         init_parameters(argc, argv, ph, total);
         return(ph);
 }
@@ -74,6 +83,7 @@ t_philo *init_philo(int argc, char **argv)
 t_philo *init_parameters(int argc, char **argv, t_philo *ph, int total)
 {
         int i;
+	int j;
 
         i = 0;
         while (i < total)
@@ -89,6 +99,12 @@ t_philo *init_parameters(int argc, char **argv, t_philo *ph, int total)
                 ph[i].meal_counter = 0;
                 ph[i].stop = 0;
 		ph[i].start = get_time();
+		j = 0;
+		while (j < ph[i].total)
+		{
+			ph[i].arr_forks[j] = 0;
+			j++;
+		}
                 i++;
         }
         return (ph);

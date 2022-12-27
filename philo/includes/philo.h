@@ -45,6 +45,7 @@ typedef struct	s_philo
 	long int	start;
 	long int	actual_time;
 	long int	last_meal;
+	int		*arr_forks;
 
 }		t_philo;
 
@@ -74,7 +75,8 @@ int	init_threads(t_all *all);
 void	destroy_mutex(int total, t_mutex *mutex);
 void	destroy_philo(t_philo *ph);
 long int	get_time(void);
-int	print(t_philo ph, t_mutex *mutex, int action);
+int	print(t_all *all, int action);
 void	*routine(void *all);
+void	take_forks(t_all *all);
 
 #endif

@@ -14,8 +14,8 @@
 
 void	*routine(void *all)
 {
-	(void)all;
 	printf("\nRoutine\n");
+	take_forks((t_all *) all);
 	return (NULL);
 }
 
@@ -28,9 +28,7 @@ int	main(int argc, char **argv)
 	all = init_all(argc, argv);
 	if (all == NULL)
 		return(-1);
-//	pthread_mutex_lock(&mutex->print);
-	
-	int i = 0;
+/*int i = 0;
 
 	while(i < all->ph[i].total)
 	{
@@ -46,8 +44,8 @@ int	main(int argc, char **argv)
 	printf("\n\n");
 	i++;
 	}
-//	destroy_mutex(all->ph->total, all->mutex);
-//	destroy_philo(all->ph);
+	destroy_mutex((all)->ph->total, (all)->mutex);
+	destroy_philo((all)->ph);
 
-	return(0);	
+*/	return(0);	
 }
