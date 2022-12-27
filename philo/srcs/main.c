@@ -18,9 +18,9 @@ void	*routine(void *ph)
 
 	ph2 = *(t_philo *)ph;
 	if (ph2.id % 2 == 0)
-		usleep(500);
+		sleep(5);
 	take_forks(ph2);
-	if (ph.vars->arr_fk[ph.id] == 1)
+//	if (ph.vars->arr_fk[ph.id] == 1)
 	print(ph2, FORK);
 //	eating(ph2);
 //	print(ph2, EAT);
