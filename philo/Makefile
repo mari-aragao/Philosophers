@@ -5,6 +5,7 @@ SRCS	=	\
 		./srcs/destroy.c \
 		./srcs/init.c \
 		./srcs/utils.c \
+		./srcs/print.c \
 		./srcs/time.c \
 		./srcs/checks.c
 
