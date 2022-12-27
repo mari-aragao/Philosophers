@@ -12,10 +12,48 @@
 
 #include "philo.h"
 
+int     init_threads(t_all *all)
+{
+        int i;
+
+        i = 0;
+        while (i < all->ph->total)
+        {
+                if (pthread_create(&all->ph[i].th, NULL, &routine, (void *)all) != 0)
+                {
+                        printf("Failed to create thread");
+                        return (-1);
+                }
+                printf("\nThread %d has started\n", i);
+//		pthread_detach(all->ph[i].th);
+                i++;
+        }
+        i = 0;
+        while (i < all->ph->total)
+        {
+                if (pthread_join(all->ph[i].th, NULL) != 0)
+                {
+                        printf("Failed to join thread");
+                        return (-1);
+                }
+                i++;
+       }
+       return (0);
+}
+
 void	*routine(void *all)
 {
-	printf("\nRoutine\n");
-	take_forks((t_all *) all);
+	t_all	*all2;
+
+	all2 = (t_all *)all;
+	if (all2->ph->id % 2 == 0)
+		usleep(200);
+	take_forks(all2);
+	print(all, FORK);
+	eating(all2);
+	print(all, EAT);
+	drop_forks(all2);
+	print(all, SLEEP);
 	return (NULL);
 }
 
@@ -23,12 +61,13 @@ int	main(int argc, char **argv)
 {
 	t_all		*all;
 
-	if (all_checks(argc, argv) == -1)
-		return(-1);
+//	if (all_checks(argc, argv) == -1)
+//		return(-1);
 	all = init_all(argc, argv);
 	if (all == NULL)
 		return(-1);
-/*int i = 0;
+	
+/*	int i = 0;
 
 	while(i < all->ph[i].total)
 	{
@@ -44,8 +83,19 @@ int	main(int argc, char **argv)
 	printf("\n\n");
 	i++;
 	}
-	destroy_mutex((all)->ph->total, (all)->mutex);
-	destroy_philo((all)->ph);
+	
+*/	
+	init_threads(all);
 
-*/	return(0);	
+	int i = 0;
+	while (i < all->ph[i].total)
+	{
+		printf("\n\nmutex_arr_forks[%i] = %i", i, all->mutex->arr_forks[i]);
+		i++;
+	}
+	printf("\n000xxx000\n");
+	//destroy_mutex((all)->ph->total, (all)->mutex);
+	//destroy_philo((all)->ph);
+
+	return(0);	
 }

@@ -28,6 +28,7 @@ typedef	struct	s_mutex
 {
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
+	int		*arr_forks;
 }		t_mutex;
 
 typedef struct	s_philo
@@ -45,7 +46,6 @@ typedef struct	s_philo
 	long int	start;
 	long int	actual_time;
 	long int	last_meal;
-	int		*arr_forks;
 
 }		t_philo;
 
@@ -78,5 +78,9 @@ long int	get_time(void);
 int	print(t_all *all, int action);
 void	*routine(void *all);
 void	take_forks(t_all *all);
+void	eating(t_all *all);
+void	drop_forks(t_all *all);
+void	count_time(long int tm);
+
 
 #endif
