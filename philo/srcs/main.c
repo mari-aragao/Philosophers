@@ -15,19 +15,52 @@
 void	*routine(void *ph)
 {
 	t_philo	ph2;
+	int total;
+	int i;
+
+	i = 0;
 
 	ph2 = *(t_philo *)ph;
+	total = ph2.vars->total;
 	if (ph2.id % 2 == 0)
-		sleep(5);
-	take_forks(ph2);
-//	if (ph.vars->arr_fk[ph.id] == 1)
-	print(ph2, FORK);
-//	eating(ph2);
-//	print(ph2, EAT);
-//	drop_forks(ph2);
-//	print(ph2, SLEEP);
+		usleep(100);
+	while (i < ph2.vars->meals_to_make)
+	{
+		while(take_forks(ph2) != 0)
+			;
+		print(ph2, FORK);
+		print(ph2, FORK);
+		print(ph2, EAT);
+		eating(ph2);
+		drop_forks(ph2);
+		print(ph2, SLEEP);
+		sleeping(ph2);
+		print(ph2, THINK);
+		if (ph2.id % 2 == 0)
+		{
+			while (ph2.vars->arr_fk[ph2.id % total] == 1 && ph2.vars->arr_fk[(ph2.id % total) + 1] == 1)
+			      usleep(10);	
+		}
+		if (ph2.id % 2 == 1)
+		{
+			while (ph2.vars->arr_fk[ph2.id % total] == 1 && ph2.vars->arr_fk[(ph2.id % total) - 1] == 1)
+			      usleep(10);
+		}
+		i++;
+	}
 	return (NULL);
 }
+
+/*
+	pthread_mutex_lock(&ph2.vars->print);
+	int i = 0;
+	while (i < ph2.vars->total)
+	{
+		printf("\narr_fk[%i] = %i", i, ph2.vars->arr_fk[i]);
+		i++;
+	}
+	pthread_mutex_unlock(&ph2.vars->print);
+*/
 
 int	main(int argc, char **argv)
 {
@@ -71,5 +104,6 @@ int	main(int argc, char **argv)
 */
 	init_threads(ph);
 	destroy_all(ph->vars->total, ph);
-	return(0);	
+	return (0);	
 }
+

@@ -72,8 +72,9 @@ void	destroy_all(int total, t_philo *vars);
 long int	get_time(void);
 int	print(t_philo ph, int action);
 void	*routine(void *ph);
-void	take_forks(t_philo ph);
+int	take_forks(t_philo ph);
 void	eating(t_philo ph);
+void	sleeping(t_philo ph);
 void	drop_forks(t_philo ph);
 void	count_time(long int tm);
 
