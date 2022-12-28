@@ -22,9 +22,9 @@ t_vars *init_vars(int argc, char **argv, int total)
 	if (!vars)
 		return (NULL);
 	vars->total = ft_atoi("5"); //////
-	vars->time_to_die = ft_atoi("200"); /////
+	vars->time_to_die = ft_atoi("20"); /////
 	vars->time_to_eat = ft_atoi("200"); //////
-	vars->time_to_sleep = ft_atoi("200"); /////
+	vars->time_to_sleep = ft_atoi("20"); /////
 	vars->meals_to_make = 3; ///
 	if (argc == 6)
 		vars->meals_to_make = ft_atoi(argv[5]);
@@ -56,7 +56,7 @@ t_philo *init_parameters(int argc, char **argv, t_philo *ph, int total)
         {
                 ph[i].id = i + 1;
                 ph[i].meal_cntr = 0;
-                ph[i].stop = 0;
+                ph[i].died = 0;
 		ph[i].st_time = get_time();
 		ph[i].last_meal = get_time();
 		ph[i].vars = va;

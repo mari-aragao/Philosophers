@@ -14,39 +14,38 @@
 
 void	*routine(void *ph)
 {
-	t_philo	ph2;
-	int total;
-	int i;
+	t_philo	*ph2;
 
-	i = 0;
-
-	ph2 = *(t_philo *)ph;
-	total = ph2.vars->total;
-	if (ph2.id % 2 == 0)
-		usleep(100);
-	while (i < ph2.vars->meals_to_make)
+	ph2 = (t_philo *)ph;
+	if (ph2->id % 2 == 0)
+		usleep(1000);
+	while (ph2->meal_cntr < ph2->vars->meals_to_make)
 	{
-		while(take_forks(ph2) != 0)
+		if (ph2->id == 4)
+			printf("\n4 em loop\n");
+		while(take_forks(ph2) == -1)
+		{	
+			if (is_dead(ph2) == -1)
+			{
+				print(ph2, DIE);
+				return (NULL);
+			}
 			;
+		}
+		if (ph2->id == 4)
+			printf("\n4 saiu\n");
 		print(ph2, FORK);
 		print(ph2, FORK);
 		print(ph2, EAT);
 		eating(ph2);
-		drop_forks(ph2);
 		print(ph2, SLEEP);
+		drop_forks(ph2);
 		sleeping(ph2);
 		print(ph2, THINK);
-		if (ph2.id % 2 == 0)
-		{
-			while (ph2.vars->arr_fk[ph2.id % total] == 1 && ph2.vars->arr_fk[(ph2.id % total) + 1] == 1)
-			      usleep(10);	
-		}
-		if (ph2.id % 2 == 1)
-		{
-			while (ph2.vars->arr_fk[ph2.id % total] == 1 && ph2.vars->arr_fk[(ph2.id % total) - 1] == 1)
-			      usleep(10);
-		}
-		i++;
+		if (ph2->vars->total % 2 == 1 && ph2->id == 1)
+			usleep(2000);
+		else
+			usleep(1000);
 	}
 	return (NULL);
 }
@@ -82,7 +81,6 @@ int	main(int argc, char **argv)
 	printf("meal_cntr = %i\n", ph[i].meal_cntr);
 	printf("stop = %i\n", ph[i].stop);
 	printf("st_time = %ld\n", ph[i].st_time);
-	printf("ac_time = %ld\n", ph[i].ac_time);
 	printf("last_meal = %ld\n", ph[i].last_meal);
 	
 	printf("VARS:\n");

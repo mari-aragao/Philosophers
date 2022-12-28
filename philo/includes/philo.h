@@ -41,9 +41,8 @@ typedef struct	s_philo
 	pthread_t	th;
 	int		id;
 	int		meal_cntr;
-	int		stop;
+	int		died;
 	long int	st_time; //start time
-	long int	ac_time; //actual time
 	long int	last_meal;
 	t_vars		*vars;
 
@@ -70,12 +69,13 @@ t_vars	*init_mutex(int total);
 int	init_threads(t_philo *ph);
 void	destroy_all(int total, t_philo *vars);
 long int	get_time(void);
-int	print(t_philo ph, int action);
+int	print(t_philo *ph, int action);
 void	*routine(void *ph);
-int	take_forks(t_philo ph);
-void	eating(t_philo ph);
-void	sleeping(t_philo ph);
-void	drop_forks(t_philo ph);
+int	take_forks(t_philo *ph);
+void	eating(t_philo *ph);
+void	sleeping(t_philo *ph);
+int	is_dead(t_philo *ph);
+void	drop_forks(t_philo *ph);
 void	count_time(long int tm);
 
 #endif
