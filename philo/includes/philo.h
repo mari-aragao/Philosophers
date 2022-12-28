@@ -31,8 +31,11 @@ typedef	struct	s_vars
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		meals_to_make;
+	int		checker;
+	pthread_t	vt;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	vulture;
 	int		*arr_fk;
 }		t_vars;
 

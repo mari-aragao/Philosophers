@@ -18,11 +18,9 @@ void	*routine(void *ph)
 
 	ph2 = (t_philo *)ph;
 	if (ph2->id % 2 == 0)
-		usleep(1000);
-	while (ph2->meal_cntr < ph2->vars->meals_to_make)
+		usleep(10000);
+	while (ph2->meal_cntr < ph2->vars->meals_to_make && ph2->vars->checker == 0)
 	{
-		if (ph2->id == 4)
-			printf("\n4 em loop\n");
 		while(take_forks(ph2) == -1)
 		{	
 			if (is_dead(ph2) == -1)
@@ -30,10 +28,7 @@ void	*routine(void *ph)
 				print(ph2, DIE);
 				return (NULL);
 			}
-			;
 		}
-		if (ph2->id == 4)
-			printf("\n4 saiu\n");
 		print(ph2, FORK);
 		print(ph2, FORK);
 		print(ph2, EAT);
@@ -43,7 +38,7 @@ void	*routine(void *ph)
 		sleeping(ph2);
 		print(ph2, THINK);
 		if (ph2->vars->total % 2 == 1 && ph2->id == 1)
-			usleep(2000);
+			usleep(10000);
 		else
 			usleep(1000);
 	}
