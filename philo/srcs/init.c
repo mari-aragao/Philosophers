@@ -5,7 +5,7 @@ t_philo	*init_all(int argc, char **argv)
 	int	total;
 	t_philo	*ph;
 
-	total = ft_atoi("5"); ///////
+	total = ft_atoi("6"); ///////
 	ph = (t_philo *)malloc(sizeof(t_philo) * total);
 	if (!ph)
 		return (NULL);
@@ -21,8 +21,8 @@ t_vars *init_vars(int argc, char **argv, int total)
         vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (NULL);
-	vars->total = ft_atoi("5"); //////
-	vars->time_to_die = ft_atoi("200"); /////
+	vars->total = ft_atoi("6"); //////
+	vars->time_to_die = ft_atoi("500"); /////
 	vars->time_to_eat = ft_atoi("200"); //////
 	vars->time_to_sleep = ft_atoi("20"); /////
 	vars->meals_to_make = 3; ///

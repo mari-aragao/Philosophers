@@ -23,26 +23,32 @@ void	*routine(void *ph)
 	{
 		while(take_forks(ph2) == -1)
 		{	
+			//if (ph2->id == 4)
+			//{
+			//	printf("philo 4 ta esperando\n");
+			//	usleep (10000);
+			//}
 			if (is_dead(ph2) == -1)
 			{
 				print(ph2, DIE);
-				return (NULL);
+				return ((void *)NULL);
 			}
 		}
 		print(ph2, FORK);
 		print(ph2, FORK);
 		print(ph2, EAT);
 		eating(ph2);
+		//printf("meal_cntr[%i] = %i\n", ph2->id, ph2->meal_cntr);
 		print(ph2, SLEEP);
 		drop_forks(ph2);
 		sleeping(ph2);
 		print(ph2, THINK);
 		if (ph2->vars->total % 2 == 1 && ph2->id == 1)
-			usleep(10000);
+			usleep(100000);
 		else
 			usleep(1000);
 	}
-	return (NULL);
+	return ((void *)NULL);
 }
 
 /*
