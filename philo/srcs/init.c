@@ -5,7 +5,7 @@ t_philo	*init_all(int argc, char **argv)
 	int	total;
 	t_philo	*ph;
 
-	total = ft_atoi("8"); ///////
+	total = ft_atoi("5"); ///////
 	ph = (t_philo *)malloc(sizeof(t_philo) * total);
 	if (!ph)
 		return (NULL);
@@ -21,10 +21,10 @@ t_vars *init_vars(int argc, char **argv, int total)
         vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (NULL);
-	vars->total = ft_atoi("8"); //////
-	vars->time_to_die = ft_atoi("500"); /////
+	vars->total = ft_atoi("5"); //////
+	vars->time_to_die = ft_atoi("30"); /////
 	vars->time_to_eat = ft_atoi("200"); //////
-	vars->time_to_sleep = ft_atoi("20"); /////
+	vars->time_to_sleep = ft_atoi("200"); /////
 	vars->meals_to_make = 3; ///
 	vars->checker = 0;
 	if (argc == 6)
@@ -67,37 +67,6 @@ t_philo *init_parameters(int argc, char **argv, t_philo *ph, int total)
         return (ph);
 }
 
-int	check_stop(t_philo *ph)
-{
-	int i;
-	int	tot;
-
-	i = 0;
-	tot = ph[1].vars->total;
-	while (i < tot)
-	{
-		if (ph[i].died == 1)
-		{
-			ph[i].vars->checker = 1;
-			return (-1);
-		}
-		i++;
-	}
-	/*while (i < ph[i].vars->total)
-	{
-		if (ph[i].meal_cntr == ph[i].vars->meals_to_make)
-			stop += 1;
-		if (ph[i].died == 1)
-		{
-			ph[i].vars->checker = 1;
-			return (-1);
-		}
-		if (stop == ph[i].vars->total - 1)
-			return (-1);
-		i++;
-	}*/
-	return (0);
-}
 int     init_threads(t_philo *ph)
 {
         int i;
@@ -110,11 +79,6 @@ int     init_threads(t_philo *ph)
                         return (-1);
                 i++;
         }
-//	while (1)
-//	{
-		check_stop(ph);
-//			break ;
-//	}
         i = 0;
         while (i < ph->vars->total)
         {

@@ -32,9 +32,9 @@ void	*routine(void *ph)
 			drop_forks(ph2);
 		if (checker(ph2) == 0)
 			thinking(ph2);
-		//if (ph2->vars->total % 2 == 1 && ph2->id == 1)
-		//	usleep(100000);
-		//else
+		if (ph2->vars->total % 2 == 1 && ph2->id == 1)
+			usleep(100000);
+		else
 			usleep(1000);
 	}
 	return ((void *)NULL);
