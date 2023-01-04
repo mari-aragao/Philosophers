@@ -19,33 +19,22 @@ void	*routine(void *ph)
 	ph2 = (t_philo *)ph;
 	if (ph2->id % 2 == 0)
 		usleep(10000);
-	while (ph2->meal_cntr < ph2->vars->meals_to_make && ph2->vars->checker == 0)
+	while (ph2->meal_cntr < ph2->vars->meals_to_make && checker(ph2) == 0)
 	{
-		while(take_forks(ph2) == -1)
+		while(take_forks(ph2) == -1 && checker(ph2) == 0)
 		{	
-			//if (ph2->id == 4)
-			//{
-			//	printf("philo 4 ta esperando\n");
-			//	usleep (10000);
-			//}
 			if (is_dead(ph2) == -1)
-			{
-				print(ph2, DIE);
 				return ((void *)NULL);
-			}
 		}
-		print(ph2, FORK);
-		print(ph2, FORK);
-		print(ph2, EAT);
-		eating(ph2);
-		//printf("meal_cntr[%i] = %i\n", ph2->id, ph2->meal_cntr);
-		print(ph2, SLEEP);
-		drop_forks(ph2);
-		sleeping(ph2);
-		print(ph2, THINK);
-		if (ph2->vars->total % 2 == 1 && ph2->id == 1)
-			usleep(100000);
-		else
+		if (checker(ph2) == 0)
+			eating(ph2);
+		if (checker(ph2) == 0)
+			drop_forks(ph2);
+		if (checker(ph2) == 0)
+			thinking(ph2);
+		//if (ph2->vars->total % 2 == 1 && ph2->id == 1)
+		//	usleep(100000);
+		//else
 			usleep(1000);
 	}
 	return ((void *)NULL);

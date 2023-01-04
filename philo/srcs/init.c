@@ -5,7 +5,7 @@ t_philo	*init_all(int argc, char **argv)
 	int	total;
 	t_philo	*ph;
 
-	total = ft_atoi("6"); ///////
+	total = ft_atoi("8"); ///////
 	ph = (t_philo *)malloc(sizeof(t_philo) * total);
 	if (!ph)
 		return (NULL);
@@ -21,7 +21,7 @@ t_vars *init_vars(int argc, char **argv, int total)
         vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (NULL);
-	vars->total = ft_atoi("6"); //////
+	vars->total = ft_atoi("8"); //////
 	vars->time_to_die = ft_atoi("500"); /////
 	vars->time_to_eat = ft_atoi("200"); //////
 	vars->time_to_sleep = ft_atoi("20"); /////
@@ -67,29 +67,36 @@ t_philo *init_parameters(int argc, char **argv, t_philo *ph, int total)
         return (ph);
 }
 
-void	*check_dead(void *ph)
+int	check_stop(t_philo *ph)
 {
-	t_philo *ph2;
 	int i;
+	int	tot;
 
-	ph2 = (t_philo *)ph;
-	while (1)
+	i = 0;
+	tot = ph[1].vars->total;
+	while (i < tot)
 	{
-		i = 0;
-		while (i < ph2[0].vars->total)
+		if (ph[i].died == 1)
 		{
-			printf("\nto vendo\n");
-			if (ph2[i].died == 1)
-			{
-				pthread_mutex_lock(&ph2[i].vars->vulture);	
-				ph2[i].vars->checker = 1;
-				pthread_mutex_unlock(&ph2[i].vars->vulture);
-				exit (EXIT_FAILURE);
-			}
-			i++;
+			ph[i].vars->checker = 1;
+			return (-1);
 		}
+		i++;
 	}
-	return (NULL);
+	/*while (i < ph[i].vars->total)
+	{
+		if (ph[i].meal_cntr == ph[i].vars->meals_to_make)
+			stop += 1;
+		if (ph[i].died == 1)
+		{
+			ph[i].vars->checker = 1;
+			return (-1);
+		}
+		if (stop == ph[i].vars->total - 1)
+			return (-1);
+		i++;
+	}*/
+	return (0);
 }
 int     init_threads(t_philo *ph)
 {
@@ -97,14 +104,17 @@ int     init_threads(t_philo *ph)
 
         i = 0;
 
-//	if (pthread_create(&ph[i].vars->vt, NULL, &check_dead, (void *)&ph) != 0)
-//		return (-1);
         while (i < ph->vars->total)
         {
                 if (pthread_create(&ph[i].th, NULL, &routine, (void *)&ph[i]) != 0)
                         return (-1);
                 i++;
         }
+//	while (1)
+//	{
+		check_stop(ph);
+//			break ;
+//	}
         i = 0;
         while (i < ph->vars->total)
         {
@@ -112,7 +122,5 @@ int     init_threads(t_philo *ph)
                         return (-1);
                 i++;
      	}
-//	if (pthread_join(ph[i].vars->vt, NULL) != 0)
-//		return (-1);
        return (0);
 }

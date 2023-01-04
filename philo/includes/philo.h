@@ -77,8 +77,10 @@ void	*routine(void *ph);
 int	take_forks(t_philo *ph);
 void	eating(t_philo *ph);
 void	sleeping(t_philo *ph);
+void	thinking(t_philo *ph);
 int	is_dead(t_philo *ph);
 void	drop_forks(t_philo *ph);
 void	count_time(long int tm);
+int	checker(t_philo *ph);
 
 #endif
