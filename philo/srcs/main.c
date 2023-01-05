@@ -11,15 +11,20 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-
+int	check_meals(t_philo *ph)
+{
+	if (ph->meal_cntr < ph->vars->meals_to_make)
+		return (0);
+	return (-1);
+}
 void	*routine(void *ph)
 {
 	t_philo	*ph2;
 
 	ph2 = (t_philo *)ph;
 	if (ph2->id % 2 == 0)
-		usleep(10000);
-	while (ph2->meal_cntr < ph2->vars->meals_to_make && checker(ph2) == 0)
+		usleep(15000);
+	while ((check_meals(ph2) == 0 && checker(ph2) == 0) || (ph2->vars->meals_to_make == -1 && checker(ph2) == 0))
 	{
 		while(take_forks(ph2) == -1 && checker(ph2) == 0)
 		{	
@@ -55,8 +60,8 @@ int	main(int argc, char **argv)
 {
 	t_philo		*ph;
 
-//	if (all_checks(argc, argv) == -1)
-//		return(-1);
+	if (all_checks(argc, argv) == -1)
+		return(-1);
 	ph = init_all(argc, argv);
 	if (ph == NULL)
 		return(-1);
@@ -91,7 +96,7 @@ int	main(int argc, char **argv)
 	
 */
 	init_threads(ph);
-	destroy_all(ph->vars->total, ph);
+//	destroy_all(ph->vars->total, ph);
 	return (0);	
 }
 

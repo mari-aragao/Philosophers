@@ -30,7 +30,7 @@ int	take_forks(t_philo *ph)
 void	eating(t_philo *ph)
 {
 	print(ph, EAT);
-	count_time(ph->vars->time_to_eat);
+	usleep(ph->vars->time_to_eat * 1000);
 	ph->last_meal = get_time();
 	ph->meal_cntr += 1; 
 }
@@ -38,7 +38,7 @@ void	eating(t_philo *ph)
 void	sleeping(t_philo *ph)
 {
 	print(ph, SLEEP);
-	count_time(ph->vars->time_to_sleep);
+	usleep(ph->vars->time_to_sleep * 1000);
 }
 
 void	thinking(t_philo *ph)
@@ -54,11 +54,17 @@ int	is_dead(t_philo *ph)
 	if (ph->vars->checker == 1)
 		return (-1);
 	actual_time = get_time();
-	if ((actual_time - ph->last_meal) > ph->vars->time_to_die)
+	if ((actual_time - ph->last_meal) > ph->vars->time_to_die && checker(ph) == 0)
 	{
 		ph->died = 1; 
-		ph->vars->checker = 1;
-		print(ph, DIE);
+		if (ph->vars->checker == 0)
+		{	
+			pthread_mutex_lock(&ph->vars->m_checker);
+			ph->vars->checker = 1;
+			print(ph, DIE);
+			usleep (15000);
+			pthread_mutex_unlock(&ph->vars->m_checker);
+		}
 		return (-1);
 	}
 	return (0);

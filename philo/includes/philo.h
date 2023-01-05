@@ -32,10 +32,9 @@ typedef	struct	s_vars
 	int		time_to_sleep;
 	int		meals_to_make;
 	int		checker;
-	pthread_t	vt;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	vulture;
+	pthread_mutex_t	m_checker;
 	int		*arr_fk;
 }		t_vars;
 
@@ -82,5 +81,6 @@ int	is_dead(t_philo *ph);
 void	drop_forks(t_philo *ph);
 void	count_time(long int tm);
 int	checker(t_philo *ph);
+int	check_meals(t_philo *ph);
 
 #endif

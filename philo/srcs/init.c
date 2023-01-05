@@ -5,7 +5,7 @@ t_philo	*init_all(int argc, char **argv)
 	int	total;
 	t_philo	*ph;
 
-	total = ft_atoi("5"); ///////
+	total = ft_atoi(argv[1]); ///////
 	ph = (t_philo *)malloc(sizeof(t_philo) * total);
 	if (!ph)
 		return (NULL);
@@ -21,11 +21,11 @@ t_vars *init_vars(int argc, char **argv, int total)
         vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (NULL);
-	vars->total = ft_atoi("5"); //////
-	vars->time_to_die = ft_atoi("30"); /////
-	vars->time_to_eat = ft_atoi("200"); //////
-	vars->time_to_sleep = ft_atoi("200"); /////
-	vars->meals_to_make = 3; ///
+	vars->total = ft_atoi(argv[1]); //////
+	vars->time_to_die = ft_atoi(argv[2]); /////
+	vars->time_to_eat = ft_atoi(argv[3]); //////
+	vars->time_to_sleep = ft_atoi(argv[4]); /////
+	vars->meals_to_make = -1; ///
 	vars->checker = 0;
 	if (argc == 6)
 		vars->meals_to_make = ft_atoi(argv[5]);
@@ -36,7 +36,7 @@ t_vars *init_vars(int argc, char **argv, int total)
 	if (!vars->arr_fk)
 		return (NULL);
         pthread_mutex_init(&vars->print, NULL);
-        pthread_mutex_init(&vars->vulture, NULL);
+        pthread_mutex_init(&vars->m_checker, NULL);
 	i = 0;
 	while(i < total)
 	{
