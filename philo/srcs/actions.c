@@ -57,14 +57,13 @@ int	is_dead(t_philo *ph)
 	if ((actual_time - ph->last_meal) > ph->vars->time_to_die && checker(ph) == 0)
 	{
 		ph->died = 1; 
+		pthread_mutex_lock(&ph->vars->m_checker);
 		if (ph->vars->checker == 0)
 		{	
-			pthread_mutex_lock(&ph->vars->m_checker);
 			ph->vars->checker = 1;
 			print(ph, DIE);
-			usleep (15000);
-			pthread_mutex_unlock(&ph->vars->m_checker);
 		}
+		pthread_mutex_unlock(&ph->vars->m_checker);
 		return (-1);
 	}
 	return (0);
