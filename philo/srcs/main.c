@@ -34,7 +34,10 @@ void	*routine(void *ph)
 		if (checker(ph2) == 0)
 			eating(ph2);
 		if (checker(ph2) == 0)
+		{
 			drop_forks(ph2);
+			sleeping(ph2);
+		}
 		if (checker(ph2) == 0)
 			thinking(ph2);
 		if (ph2->vars->total % 2 == 1 && ph2->id == 1)
