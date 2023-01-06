@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:13:01 by maragao           #+#    #+#             */
-/*   Updated: 2022/12/21 12:54:01 by maragao          ###   ########.fr       */
+/*   Updated: 2023/01/06 18:39:42 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	eating(t_philo *ph);
 void	sleeping(t_philo *ph);
 int	is_dead(t_philo *ph);
 void	drop_forks(t_philo *ph);
+int		check_permission(t_philo *ph);
 
 #endif

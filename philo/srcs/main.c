@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 22:09:49 by maragao           #+#    #+#             */
-/*   Updated: 2022/12/21 13:28:29 by maragao          ###   ########.fr       */
+/*   Updated: 2023/01/06 18:48:21 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	*one_philo(void *ph)
 	t_philo	*ph2;
 
 	ph2 = (t_philo *)ph;
-	count_time(ph2->vars->time_to_die);
-	print(ph2, DIE);
+	usleep(ph2->vars->time_to_die * 1000);
+	printf("%ld %i died\n", (get_time() - ph2->st_time), ph2->id);
 	return ((void *) NULL);
 }
 
@@ -28,7 +28,7 @@ void	*philo(void *ph)
 
 	ph2 = (t_philo *)ph;
 	if (ph2->id % 2 == 0)
-		usleep(10000);
+		usleep(100);
 	while (check_meals(ph2) == 0)
 	{
 		while (take_forks(ph2) == -1 && ph2->vars->checker == 0)
@@ -42,6 +42,10 @@ void	*philo(void *ph)
 			drop_forks(ph2);
 		if (ph2->vars->checker == 0)
 			print(ph2, THINK);
+		if (ph2->vars->total % 2 == 1)
+			usleep(1000);
+		usleep(500);
+		
 	}
 	return ((void *) NULL);
 }

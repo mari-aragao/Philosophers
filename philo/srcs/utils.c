@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:31:20 by maragao           #+#    #+#             */
-/*   Updated: 2022/12/21 12:52:55 by maragao          ###   ########.fr       */
+/*   Updated: 2023/01/06 17:22:20 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ int	print(t_philo *ph, int action)
 
 	actual_time = get_time() - ph->st_time;
 	pthread_mutex_lock(&ph->vars->print);
-	if (action == FORK)
-		printf("%ld %i has taken a fork\n", actual_time, ph->id);
-	if (action == EAT)
-		printf("%ld %d is eating\n", actual_time, ph->id);
-	if (action == SLEEP)
-		printf("%ld %d is sleeping\n", actual_time, ph->id);
-	if (action == THINK)
-		printf("%ld %d is thinking\n", actual_time, ph->id);
-	if (action == DIE)
-		printf("%ld %d died\n", actual_time, ph->id);
+		if (action == FORK)
+			printf("%ld %i has taken a fork\n", actual_time, ph->id);
+		if (action == EAT)
+			printf("%ld %d is eating\n", actual_time, ph->id);
+		if (action == SLEEP)
+			printf("%ld %d is sleeping\n", actual_time, ph->id);
+		if (action == THINK)
+			printf("%ld %d is thinking\n", actual_time, ph->id);
+		if (action == DIE)
+			printf("%ld %d died\n", actual_time, ph->id);
 	pthread_mutex_unlock(&ph->vars->print);
 	return (0);
 }
