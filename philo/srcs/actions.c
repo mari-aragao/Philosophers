@@ -26,9 +26,11 @@ int	take_forks(t_philo *ph)
 
 void	eating(t_philo *ph)
 {
+	if (is_dead(ph) == -1)
+		return ;
 	print(ph, EAT);
-	count_time(ph->vars->time_to_eat);
 	ph->last_meal = get_time();
+	count_time(ph->vars->time_to_eat);
 	ph->meal_cntr += 1;
 }
 
@@ -45,8 +47,8 @@ int	is_dead(t_philo *ph)
 	actual_time = get_time();
 	if ((actual_time - ph->last_meal) > ph->vars->time_to_die)
 	{
-		ph->die = 1;
 		pthread_mutex_lock(&ph->vars->m_checker);
+		ph->die = 1;
 		if (ph->vars->checker == 0)
 		{	
 			ph->vars->checker = 1;

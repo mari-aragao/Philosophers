@@ -50,10 +50,18 @@ int	print(t_philo *ph, int action)
 
 int	check_meals(t_philo *ph)
 {
+	pthread_mutex_lock(&ph->vars->m_checker);
 	if (ph->meal_cntr < ph->vars->meals_to_make && ph->vars->checker == 0)
+	{
+		pthread_mutex_unlock(&ph->vars->m_checker);
 		return (0);
+	}
 	if (ph->vars->meals_to_make == -1 && ph->vars->checker == 0)
+	{
+		pthread_mutex_unlock(&ph->vars->m_checker);
 		return (0);
+	}
+	pthread_mutex_unlock(&ph->vars->m_checker);
 	return (-1);
 }
 
