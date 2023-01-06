@@ -59,8 +59,8 @@ int	check_number(char **argv)
 
 int	check_bigger_than_zero(char **argv)
 {
-	int i;
-	int temp;
+	int	i;
+	int	temp;
 
 	i = 1;
 	while (argv[i])

@@ -52,8 +52,8 @@ typedef struct	s_philo
 
 //main.c
 int	main(int argc, char **argv);
-void	*routine(void *ph);
-void	*routine_for_one(void *ph);
+void	*one_philo(void *ph);
+void	*philo(void *ph);
 
 //utils.c
 int	ft_atoi(char *s);

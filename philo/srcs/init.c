@@ -2,10 +2,10 @@
 
 t_philo	*init_all(int argc, char **argv)
 {
-	int	total;
+	int		total;
 	t_philo	*ph;
 
-	total = ft_atoi(argv[1]); 
+	total = ft_atoi(argv[1]);
 	ph = (t_philo *)malloc(sizeof(t_philo) * total);
 	if (!ph)
 		return (NULL);
@@ -15,12 +15,12 @@ t_philo	*init_all(int argc, char **argv)
 	return (ph);
 }
 
-t_vars *init_vars(int argc, char **argv, int total)
+t_vars	*init_vars(int argc, char **argv, int total)
 {
-	int	i;
-        t_vars *vars;
+	int		i;
+	t_vars	*vars;
 
-        vars = malloc(sizeof(t_vars));
+	vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (NULL);
 	vars->meals_to_make = -1;
@@ -32,66 +32,66 @@ t_vars *init_vars(int argc, char **argv, int total)
 	vars->arr_fk = malloc(sizeof(int) * total);
 	if (!vars->arr_fk)
 		return (NULL);
-        pthread_mutex_init(&vars->print, NULL);
-        pthread_mutex_init(&vars->m_checker, NULL);
+	pthread_mutex_init(&vars->print, NULL);
+	pthread_mutex_init(&vars->m_checker, NULL);
 	i = -1;
-	while(++i < total)
+	while (++i < total)
 	{
-        	pthread_mutex_init(&vars->forks[i], NULL);
+		pthread_mutex_init(&vars->forks[i], NULL);
 		vars->arr_fk[i] = 0;
 	}
-        return (vars);
+	return (vars);
 }
 
-t_philo *init_parameters(int argc, char **argv, t_philo *ph, int total)
+t_philo	*init_parameters(int argc, char **argv, t_philo *ph, int total)
 {
-        int i;
+	int		i;
 	t_vars	*va;
 
 	va = init_vars(argc, argv, total);
 	if (!va)
 		return (NULL);
-	va->total = ft_atoi(argv[1]); 
-	va->time_to_die = ft_atoi(argv[2]); 
-	va->time_to_eat = ft_atoi(argv[3]); 
+	va->total = ft_atoi(argv[1]);
+	va->time_to_die = ft_atoi(argv[2]);
+	va->time_to_eat = ft_atoi(argv[3]);
 	va->time_to_sleep = ft_atoi(argv[4]);
 	va->checker = 0;
-        i = 0;
-        while (i < total)
-        {
-                ph[i].id = i + 1;
-                ph[i].meal_cntr = 0;
-                ph[i].die = 0;
+	i = 0;
+	while (i < total)
+	{
+		ph[i].id = i + 1;
+		ph[i].meal_cntr = 0;
+		ph[i].die = 0;
 		ph[i].st_time = get_time();
 		ph[i].last_meal = get_time();
 		ph[i].vars = va;
-                i++;
-        }
-        return (ph);
+		i++;
+	}
+	return (ph);
 }
 
-int     init_threads(t_philo *ph)
+int	init_threads(t_philo *ph)
 {
-        int i;
+	int	i;
 
-        i = -1;
+	i = -1;
 	if (ph->vars->total == 1)
 	{
-                if (pthread_create(&ph[0].th, NULL, &routine_for_one, (void *)&ph[0]) != 0)
-                        return (-1);
-                if (pthread_join(ph[0].th, NULL) != 0)
-                        return (-1);
+		if (pthread_create(&ph[0].th, NULL, &one_philo, (void *)&ph[0]) != 0)
+			return (-1);
+		if (pthread_join(ph[0].th, NULL) != 0)
+			return (-1);
 		return (0);
 	}
 	while (++i < ph->vars->total)
 	{
-   		if (pthread_create(&ph[i].th, NULL, &routine, (void *)&ph[i]) != 0)
+		if (pthread_create(&ph[i].th, NULL, &philo, (void *)&ph[i]) != 0)
 			return (-1);
 	}
-        i = -1;
-        while (++i < ph->vars->total)
-        {
-                if (pthread_join(ph[i].th, NULL) != 0)
+	i = -1;
+	while (++i < ph->vars->total)
+	{
+		if (pthread_join(ph[i].th, NULL) != 0)
 			return (-1);
 	}
 	return (0);

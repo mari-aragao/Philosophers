@@ -2,9 +2,9 @@
 
 int	take_forks(t_philo *ph)
 {
-	int total;
-	int fork_one;
-	int fork_two;
+	int	total;
+	int	fork_one;
+	int	fork_two;
 
 	total = ph->vars->total;
 	fork_one = ph->id % total;
@@ -29,7 +29,7 @@ void	eating(t_philo *ph)
 	print(ph, EAT);
 	count_time(ph->vars->time_to_eat);
 	ph->last_meal = get_time();
-	ph->meal_cntr += 1; 
+	ph->meal_cntr += 1;
 }
 
 void	sleeping(t_philo *ph)
@@ -40,12 +40,12 @@ void	sleeping(t_philo *ph)
 
 int	is_dead(t_philo *ph)
 {
-	long int actual_time;
+	long int	actual_time;
 
 	actual_time = get_time();
 	if ((actual_time - ph->last_meal) > ph->vars->time_to_die)
 	{
-		ph->die = 1; 
+		ph->die = 1;
 		pthread_mutex_lock(&ph->vars->m_checker);
 		if (ph->vars->checker == 0)
 		{	
@@ -60,9 +60,9 @@ int	is_dead(t_philo *ph)
 
 void	drop_forks(t_philo *ph)
 {
-	int total;
-	int fork_one;
-	int fork_two;
+	int	total;
+	int	fork_one;
+	int	fork_two;
 
 	total = ph->vars->total;
 	fork_one = ph->id % total;
