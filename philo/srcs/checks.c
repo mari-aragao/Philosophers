@@ -24,20 +24,20 @@ int	all_checks(int argc, char **argv)
 		write(2, "Error\n", 6);
 		return (-1);
 	}
-	if (check_positive_number(argv) == -1)
+	if (check_number(argv) == -1)
 	{
 		write(2, "Error\n", 6);
 		return (-1);
 	}
 	if (check_bigger_than_zero(argv) == -1)
 	{
-		write(2, "Error esse\n", 11);
+		write(2, "Error\n", 11);
 		return (-1);
 	}
 	return (0);
 }
 
-int	check_positive_number(char **argv)
+int	check_number(char **argv)
 {
 	int	i;
 	int	j;

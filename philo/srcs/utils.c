@@ -12,11 +12,6 @@
 
 #include "philo.h"
 
-int	is_digit(int c)
-{
-	return (c >= 48 && c <= 57);
-}
-
 int	ft_atoi(char *s)
 {
 	int	i;

@@ -13,51 +13,46 @@
 #include "philo.h"
 int	check_meals(t_philo *ph)
 {
-	if (ph->meal_cntr < ph->vars->meals_to_make)
+	if (ph->meal_cntr < ph->vars->meals_to_make && ph->vars->checker == 0)
+		return (0);
+	if (ph->vars->meals_to_make == -1 && ph->vars->checker == 0)
 		return (0);
 	return (-1);
 }
+
+void	*routine_for_one(void *ph)
+{
+	t_philo *ph2;
+
+	ph2 = (t_philo *)ph;
+	count_time(ph2->vars->time_to_die);
+	print(ph2, DIE);
+	return ((void *)NULL);
+}
+
 void	*routine(void *ph)
 {
 	t_philo	*ph2;
 
 	ph2 = (t_philo *)ph;
 	if (ph2->id % 2 == 0)
-		usleep(15000);
-	while ((check_meals(ph2) == 0 && checker(ph2) == 0) || (ph2->vars->meals_to_make == -1 && checker(ph2) == 0))
+		usleep(10000);
+	while (check_meals(ph2) == 0)
 	{
-		while(take_forks(ph2) == -1 && checker(ph2) == 0)
+		while(take_forks(ph2) == -1 && ph2->vars->checker == 0)
 		{	
 			if (is_dead(ph2) == -1)
 				return ((void *)NULL);
 		}
-		if (checker(ph2) == 0)
+		if (ph2->vars->checker == 0)
 			eating(ph2);
-		if (checker(ph2) == 0)
-		{
+		if (ph2->vars->checker == 0)
 			drop_forks(ph2);
-			sleeping(ph2);
-		}
-		if (checker(ph2) == 0)
-			thinking(ph2);
-		if (ph2->vars->total % 2 == 1 && ph2->id == 1)
-			usleep(100000);
-		else
-			usleep(1000);
+		if (ph2->vars->checker == 0)
+			print(ph2, THINK);
 	}
 	return ((void *)NULL);
 }
-
-/*
-	pthread_mutex_lock(&ph2.vars->print);
-	int i = 0;
-	while (i < ph2.vars->total)
-	{
-		printf("\narr_fk[%i] = %i", i, ph2.vars->arr_fk[i]);
-		i++;
-	}
-	pthread_mutex_unlock(&ph2.vars->print);
-*/
 
 int	main(int argc, char **argv)
 {
@@ -68,38 +63,7 @@ int	main(int argc, char **argv)
 	ph = init_all(argc, argv);
 	if (ph == NULL)
 		return(-1);
-/*
-	int i = 0;
-
-	while(i < 5)
-	{
-	printf("\n\n");
-	printf("PHILOS:\n");
-	printf("id = %i\n", ph[i].id);
-	printf("meal_cntr = %i\n", ph[i].meal_cntr);
-	printf("stop = %i\n", ph[i].stop);
-	printf("st_time = %ld\n", ph[i].st_time);
-	printf("last_meal = %ld\n", ph[i].last_meal);
-	
-	printf("VARS:\n");
-	printf("total = %i\n", ph[i].vars->total);
-	printf("time_to_die = %i\n", ph[i].vars->time_to_die);
-	printf("time_to_eat = %i\n", ph[i].vars->time_to_eat);
-	printf("time_to_sleep = %i\n", ph[i].vars->time_to_sleep);
-	printf("meals_to_make = %i\n", ph[i].vars->meals_to_make);
-	int j = 0;
-	while (j < 5)
-	{
-		printf("\n\nmutex_arr_forks[%i] = %i", j, ph[i].vars->arr_fk[j]);
-		j++;
-	}
-	printf("\n\n");
-	i++;
-	}
-	
-*/
 	init_threads(ph);
-//	destroy_all(ph->vars->total, ph);
+//	destroy_all(ph-vars->total, ph);
 	return (0);	
 }
-
