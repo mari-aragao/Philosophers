@@ -14,6 +14,49 @@ int	check_permission(t_philo *ph)
 	return (-1);
 }
 
+void	return_fork(t_philo *ph, int total)
+{
+	pthread_mutex_lock(&ph->vars->forks[ph->id % total]);
+	ph->vars->arr_fk[ph->id % total] = 0;
+	pthread_mutex_unlock(&ph->vars->forks[ph->id % total]);
+}
+
+void	take_forks(t_philo *ph)
+{
+	int	total;
+	int	fork_one;
+	int	fork_two;
+
+	total = ph->vars->total;
+	fork_one = ph->id % total;
+	fork_two = (ph->id + 1) % total;
+
+	while (1)
+	{
+		if (ph->vars->arr_fk[fork_one] == 0)
+		{
+			pthread_mutex_lock(&ph->vars->forks[fork_one]);
+			ph->vars->arr_fk[fork_one] = 1;
+			pthread_mutex_unlock(&ph->vars->forks[fork_one]);
+			break ;
+		}
+	}
+	while (1)
+	{
+		if (is_dead(ph) == -1)
+			break ;
+		if (ph->vars->arr_fk[fork_two] == 0)
+		{
+			pthread_mutex_lock(&ph->vars->forks[fork_two]);
+			ph->vars->arr_fk[fork_two] = 1;
+			print(ph, FORK);
+			print(ph, FORK);
+			pthread_mutex_unlock(&ph->vars->forks[fork_two]);
+			break ;
+		}
+	}
+}
+/*
 int	take_forks(t_philo *ph)
 {
 	int	total;
@@ -22,7 +65,7 @@ int	take_forks(t_philo *ph)
 
 	total = ph->vars->total;
 	fork_one = ph->id % total;
-		fork_two = (ph->id + 1) % total;
+	fork_two = (ph->id + 1) % total;
 	if (ph->vars->arr_fk[fork_one] == 0 && ph->vars->arr_fk[fork_two] == 0 && check_permission(ph) == 0) 
 	{
 		pthread_mutex_lock(&ph->vars->forks[fork_one]);
@@ -37,7 +80,7 @@ int	take_forks(t_philo *ph)
 	}
 	return (-1);
 }
-
+*/
 void	eating(t_philo *ph)
 {
 	print(ph, EAT);
@@ -80,7 +123,10 @@ void	drop_forks(t_philo *ph)
 
 	total = ph->vars->total;
 	fork_one = ph->id % total;
-	fork_two = (ph->id + 1) % total;
+	//	if (ph->id % 2 == 0 && ph->vars->total % 2 == 1)
+		fork_two = (ph->id + 1) % total;
+//	else
+//		fork_two = (ph->id - 1) % total;
 	pthread_mutex_lock(&ph->vars->forks[fork_one]);
 	pthread_mutex_lock(&ph->vars->forks[fork_two]);
 	ph->vars->arr_fk[fork_one] = 0;

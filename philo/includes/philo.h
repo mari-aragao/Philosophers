@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:13:01 by maragao           #+#    #+#             */
-/*   Updated: 2023/01/06 18:39:42 by maragao          ###   ########.rio      */
+/*   Updated: 2023/01/06 19:42:44 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	init_threads(t_philo *ph);
 long int	get_time(void);
 void	count_time(long int tm);
 
-int	take_forks(t_philo *ph);
+void	take_forks(t_philo *ph);
 void	eating(t_philo *ph);
 void	sleeping(t_philo *ph);
 int	is_dead(t_philo *ph);
