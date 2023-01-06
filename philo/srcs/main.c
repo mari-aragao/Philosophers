@@ -64,6 +64,6 @@ int	main(int argc, char **argv)
 	if (ph == NULL)
 		return(-1);
 	init_threads(ph);
-//	destroy_all(ph-vars->total, ph);
+	destroy_all(ph->vars->total, ph);
 	return (0);	
 }
