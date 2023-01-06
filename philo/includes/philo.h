@@ -50,28 +50,36 @@ typedef struct	s_philo
 
 }		t_philo;
 
+//main.c
 int	main(int argc, char **argv);
+void	*routine(void *ph);
+void	*routine_for_one(void *ph);
+
+//utils.c
 int	ft_atoi(char *s);
+int	print(t_philo *ph, int action);
+int	check_meals(t_philo *ph);
+void	destroy_all(int total, t_philo *vars);
+
+//checks.c
 int	all_checks(int argc, char **argv);
 int	check_number(char **argv);
 int	check_bigger_than_zero(char **argv);
+
+//init.c
 t_philo	*init_all(int argc, char **argv);
-t_philo	*init_philo(int argc, char **argv);
-t_philo	*init_parameters(int argc, char **argv, t_philo *philo, int total);
 t_vars	*init_vars(int argc, char **argv, int total);
+t_philo	*init_parameters(int argc, char **argv, t_philo *philo, int total);
 int	init_threads(t_philo *ph);
-void	destroy_all(int total, t_philo *vars);
+
+//
 long int	get_time(void);
-int	print(t_philo *ph, int action);
-void	*routine(void *ph);
-void	*routine_for_one(void *ph);
+void	count_time(long int tm);
+
 int	take_forks(t_philo *ph);
 void	eating(t_philo *ph);
 void	sleeping(t_philo *ph);
 int	is_dead(t_philo *ph);
 void	drop_forks(t_philo *ph);
-void	count_time(long int tm);
-int	checker(t_philo *ph);
-int	check_meals(t_philo *ph);
 
 #endif

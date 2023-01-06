@@ -11,14 +11,6 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-int	check_meals(t_philo *ph)
-{
-	if (ph->meal_cntr < ph->vars->meals_to_make && ph->vars->checker == 0)
-		return (0);
-	if (ph->vars->meals_to_make == -1 && ph->vars->checker == 0)
-		return (0);
-	return (-1);
-}
 
 void	*routine_for_one(void *ph)
 {
