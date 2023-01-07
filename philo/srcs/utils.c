@@ -34,16 +34,19 @@ int	print(t_philo *ph, int action)
 
 	actual_time = get_time() - ph->st_time;
 	pthread_mutex_lock(&ph->vars->print);
-		if (action == FORK)
+		if (action == FORK && ph->vars->prt == 0)
 			printf("%ld %i has taken a fork\n", actual_time, ph->id);
-		if (action == EAT)
+		if (action == EAT && ph->vars->prt == 0)
 			printf("%ld %d is eating\n", actual_time, ph->id);
-		if (action == SLEEP)
+		if (action == SLEEP && ph->vars->prt == 0)
 			printf("%ld %d is sleeping\n", actual_time, ph->id);
-		if (action == THINK)
+		if (action == THINK && ph->vars->prt == 0)
 			printf("%ld %d is thinking\n", actual_time, ph->id);
-		if (action == DIE)
+		if (action == DIE && ph->vars->prt == 0)
+		{
 			printf("%ld %d died\n", actual_time, ph->id);
+			ph->vars->prt = 1;
+		}
 	pthread_mutex_unlock(&ph->vars->print);
 	return (0);
 }

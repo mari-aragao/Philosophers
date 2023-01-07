@@ -12,6 +12,23 @@
 
 #include "philo.h"
 
+int	checker(t_philo *ph)
+{
+	pthread_mutex_lock(&ph->vars->m_checker);
+	if (ph->vars->checker == 0)
+	{
+		pthread_mutex_unlock(&ph->vars->m_checker);
+		return (0);
+	}
+	if (ph->vars->checker == 1)
+	{
+		pthread_mutex_unlock(&ph->vars->m_checker);
+		return (1);
+	}
+	pthread_mutex_unlock(&ph->vars->m_checker);
+	return (-1);
+}
+
 void	*one_philo(void *ph)
 {
 	t_philo	*ph2;
@@ -28,20 +45,16 @@ void	*philo(void *ph)
 
 	ph2 = (t_philo *)ph;
 	if (ph2->id % 2 == 1)
-		usleep(100);
+		usleep(100 * (ph2->vars->total / 2));
 	while (check_meals(ph2) == 0)
 	{
 		take_forks(ph2); 
-		if (ph2->vars->checker == 1)
-				return ((void *) NULL);
-		if (ph2->vars->checker == 0)
-			eating(ph2);
-		if (ph2->vars->checker == 0)
-			drop_forks(ph2);
-		if (ph2->vars->checker == 0)
-			print(ph2, THINK);
-		//if (ph2->vars->total % 2 == 1)
-		//	usleep(100);
+		if (is_dead(ph2) == -1)
+			return ((void *) NULL);
+		eating(ph2);
+		drop_forks(ph2);
+		sleeping(ph2);
+		thinking(ph2);
 	}
 	return ((void *) NULL);
 }
