@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 18:02:46 by maragao           #+#    #+#             */
+/*   Updated: 2023/01/10 18:25:12 by maragao          ###   ########.rio      */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	check_permission(t_philo *ph)
 {
 	long int	actual_time;
-	
+
 	actual_time = get_time();
 	if (ph->vars->total % 2 == 0)
 		return (0);
@@ -14,26 +26,8 @@ int	check_permission(t_philo *ph)
 	return (-1);
 }
 
-void	return_fork(t_philo *ph, int total)
+void	loop_one(t_philo *ph, int fork_one)
 {
-	pthread_mutex_lock(&ph->vars->forks[ph->id % total]);
-	ph->vars->arr_fk[ph->id % total] = 0;
-	pthread_mutex_unlock(&ph->vars->forks[ph->id % total]);
-}
-
-void	take_forks(t_philo *ph)
-{
-	int	total;
-	int	fork_one;
-	int	fork_two;
-
-	total = ph->vars->total;
-	fork_one = ph->id % total;
-	if (ph->id % 2 == 0 || ph->vars->total % 2 == 1)
-		fork_two = (ph->id + 1) % total;
-	else
-		fork_two = (ph->id - 1) % total;
-//printf("id = %i, fk[one] = %i, fk[two] = %i\n", ph->id, fork_one, fork_two);
 	while (1)
 	{
 		pthread_mutex_lock(&ph->vars->forks[fork_one]);
@@ -47,7 +41,11 @@ void	take_forks(t_philo *ph)
 		if (is_dead(ph) == -1)
 			break ;
 	}
-	while (1)
+}
+
+	void	loop_two(t_philo *ph, int fork_two)
+{
+	while(1)
 	{
 		if (is_dead(ph) == -1)
 			break ;
@@ -63,8 +61,8 @@ void	take_forks(t_philo *ph)
 		pthread_mutex_unlock(&ph->vars->forks[fork_two]);
 	}
 }
-/*
-int	take_forks(t_philo *ph)
+
+void	take_forks(t_philo *ph)
 {
 	int	total;
 	int	fork_one;
@@ -72,22 +70,42 @@ int	take_forks(t_philo *ph)
 
 	total = ph->vars->total;
 	fork_one = ph->id % total;
-	fork_two = (ph->id + 1) % total;
-	if (ph->vars->arr_fk[fork_one] == 0 && ph->vars->arr_fk[fork_two] == 0 && check_permission(ph) == 0) 
+	if (ph->id % 2 == 0 || ph->vars->total % 2 == 1)
+		fork_two = (ph->id + 1) % total;
+	else
+		fork_two = (ph->id - 1) % total;
+/*	while (1)
 	{
 		pthread_mutex_lock(&ph->vars->forks[fork_one]);
-		pthread_mutex_lock(&ph->vars->forks[fork_two]);
-		ph->vars->arr_fk[fork_one] = 1;
-		ph->vars->arr_fk[fork_two] = 1;
-		print(ph, FORK);
-		print(ph, FORK);
+		if (ph->vars->arr_fk[fork_one] == 0)
+		{
+			ph->vars->arr_fk[fork_one] = 1;
+			pthread_mutex_unlock(&ph->vars->forks[fork_one]);
+			break ;
+		}
 		pthread_mutex_unlock(&ph->vars->forks[fork_one]);
-		pthread_mutex_unlock(&ph->vars->forks[fork_two]);
-		return (0);
-	}
-	return (-1);
+		if (is_dead(ph) == -1)
+			break ;
+*/		loop_one(ph, fork_one);
+/*	}
+	while (1)
+	{
+		if (is_dead(ph) == -1)
+			break ;
+		pthread_mutex_lock(&ph->vars->forks[fork_two]);
+		if (ph->vars->arr_fk[fork_two] == 0)
+		{
+			ph->vars->arr_fk[fork_two] = 1;
+			print(ph, FORK);
+			print(ph, FORK);
+			pthread_mutex_unlock(&ph->vars->forks[fork_two]);
+			break ;
+		}
+	pthread_mutex_unlock(&ph->vars->forks[fork_two]);
+*/	loop_two(ph, fork_two);
+//	}
 }
-*/
+
 void	eating(t_philo *ph)
 {
 	if (checker(ph) == 1)

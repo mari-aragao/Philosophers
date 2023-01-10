@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:09:49 by maragao           #+#    #+#             */
-/*   Updated: 2023/01/06 20:13:49 by maragao          ###   ########.rio      */
+/*   Created: 2023/01/10 18:01:45 by maragao           #+#    #+#             */
+/*   Updated: 2023/01/10 18:04:08 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*philo(void *ph)
 		usleep(100 * (ph2->vars->total / 2));
 	while (check_meals(ph2) == 0)
 	{
-		take_forks(ph2); 
+		take_forks(ph2);
 		if (is_dead(ph2) == -1)
 			return ((void *) NULL);
 		eating(ph2);

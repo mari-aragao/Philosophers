@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/30 17:11:32 by maragao           #+#    #+#             */
-/*   Updated: 2022/12/21 12:56:11 by maragao          ###   ########.fr       */
+/*   Created: 2023/01/10 18:02:06 by maragao           #+#    #+#             */
+/*   Updated: 2023/01/10 18:02:27 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philo.h"
 
 int	all_checks(int argc, char **argv)
 {
