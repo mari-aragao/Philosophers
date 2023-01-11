@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 18:02:46 by maragao           #+#    #+#             */
-/*   Updated: 2023/01/10 18:25:12 by maragao          ###   ########.rio      */
+/*   Updated: 2023/01/11 17:05:25 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	take_one(t_philo *ph, int fork_one)
 
 void	take_two(t_philo *ph, int fork_two)
 {
-	while(1)
+	while (1)
 	{
 		if (checker(ph) == 1)
 			break ;
@@ -56,7 +56,6 @@ void	take_forks(t_philo *ph)
 
 	total = ph->vars->total;
 	fork_one = ph->id % total;
-
 	if (ph->id % 2 == 0 || ph->vars->total % 2 == 1)
 		fork_two = (ph->id + 1) % total;
 	else
@@ -68,32 +67,7 @@ void	take_forks(t_philo *ph)
 		return ;
 	take_two(ph, fork_two);
 }
-
-void	eating(t_philo *ph)
-{
-	if (checker(ph) == 1)
-		return ;
-	print(ph, EAT);
-	ph->last_meal = get_time();
-	usleep(ph->vars->time_to_eat * 1000);
-	ph->meal_cntr += 1;
-}
-
-void	sleeping(t_philo *ph)
-{
-	if (checker(ph) == 1)
-		return ;
-	print(ph, SLEEP);
-	usleep(ph->vars->time_to_sleep * 1000);
-}
-
-void	thinking(t_philo *ph)
-{
-	if (checker(ph) == 1)
-		return ;
-	print(ph, THINK);
-}
-
+/*
 int	is_dead(t_philo *ph)
 {
 	long int	actual_time;
@@ -115,7 +89,7 @@ int	is_dead(t_philo *ph)
 	}
 	return (0);
 }
-
+*/
 void	drop_forks(t_philo *ph)
 {
 	int	total;

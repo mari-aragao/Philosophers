@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 18:01:56 by maragao           #+#    #+#             */
-/*   Updated: 2023/01/10 18:01:57 by maragao          ###   ########.rio      */
+/*   Updated: 2023/01/11 16:51:24 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,28 @@ t_philo	*init_parameters(int argc, char **argv, t_philo *ph, int total)
 	return (ph);
 }
 
+int	init_one(t_philo *ph)
+{
+	if (pthread_create(&ph[0].th, NULL, &one_philo, (void *)&ph[0]) != 0)
+		return (-1);
+	if (pthread_join(ph[0].th, NULL) != 0)
+		return (-1);
+	return (0);
+}
+
 int	init_threads(t_philo *ph)
 {
 	int	i;
 
-	i = -1;
 	if (ph->vars->total == 1)
-	{
-		if (pthread_create(&ph[0].th, NULL, &one_philo, (void *)&ph[0]) != 0)
-			return (-1);
-		if (pthread_join(ph[0].th, NULL) != 0)
-			return (-1);
-		return (0);
-	}
+		return (init_one(ph));
+	i = -1;
 	while (++i < ph->vars->total)
 	{
 		if (pthread_create(&ph[i].th, NULL, &philo, (void *)&ph[i]) != 0)
 			return (-1);
 	}
-	if (pthread_create(&ph->vars->monitoring, NULL, &monitoring, (void *)ph) != 0)
+	if (pthread_create(&ph->vars->mnt, NULL, &monitoring, (void *)ph) != 0)
 		return (-1);
 	i = -1;
 	while (++i < ph->vars->total)
@@ -110,7 +113,7 @@ int	init_threads(t_philo *ph)
 		if (pthread_join(ph[i].th, NULL) != 0)
 			return (-1);
 	}
-	if (pthread_join(ph->vars->monitoring, NULL) != 0)
+	if (pthread_join(ph->vars->mnt, NULL) != 0)
 		return (-1);
 	return (0);
 }

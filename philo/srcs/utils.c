@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 18:01:17 by maragao           #+#    #+#             */
-/*   Updated: 2023/01/10 18:02:38 by maragao          ###   ########.rio      */
+/*   Updated: 2023/01/11 16:54:07 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,28 @@ int	print(t_philo *ph, int action)
 	pthread_mutex_unlock(&ph->vars->print);
 	return (0);
 }
-/*
+
 int	check_meals(t_philo *ph)
 {
-	pthread_mutex_lock(&ph->vars->m_checker);
-	if (ph->meal_cntr < ph->vars->meals_to_make && ph->vars->checker == 0)
+	int	j;
+
+	j = 0;
+	while (j < ph->vars->total)
 	{
-		pthread_mutex_unlock(&ph->vars->m_checker);
-		return (0);
+		if (ph[j].stop != 1)
+			break ;
+		j++;
 	}
-	if (ph->vars->meals_to_make == -1 && ph->vars->checker == 0)
+	if (j == ph->vars->total)
 	{
+		pthread_mutex_lock(&ph->vars->m_checker);
+		ph->vars->checker = 1;
 		pthread_mutex_unlock(&ph->vars->m_checker);
-		return (0);
+		return (1);
 	}
-	pthread_mutex_unlock(&ph->vars->m_checker);
-	return (-1);
+	return (0);
 }
-*/
+
 void	destroy_all(int total, t_philo *ph)
 {
 	int	i;

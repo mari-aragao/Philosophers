@@ -6,7 +6,7 @@
 /*   By: maragao <maragao@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 18:01:45 by maragao           #+#    #+#             */
-/*   Updated: 2023/01/10 18:04:08 by maragao          ###   ########.rio      */
+/*   Updated: 2023/01/11 16:57:10 by maragao          ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,59 +29,33 @@ int	checker(t_philo *ph)
 	return (-1);
 }
 
-int	check_meals(t_philo *ph)
-{
-	int j;
-
-	j = 0;
-	while (j < ph->vars->total)
-	{
-		if (ph[j].stop != 1)
-			break ;
-		j++;
-	}
-	if (j == ph->vars->total)
-	{
-		pthread_mutex_lock(&ph->vars->m_checker);
-		ph->vars->checker = 1;
-		pthread_mutex_unlock(&ph->vars->m_checker);
-		return (1);
-	}
-	//printf ("checker = %i\n", ph->vars->checker);
-	return (0);
-}
-
 void	*monitoring(void *ph2)
 {
-	t_philo *ph;
-	int	i;
+	t_philo	*ph;
+	int		i;
 
 	ph = (t_philo *)ph2;
-	while(1)
+	while (1)
 	{
-		i = 0;
-		while (i < ph->vars->total)
+		i = -1;
+		while (++i < ph->vars->total)
 		{
 			if (check_meals(ph) == 1)
 				return ((void *) NULL);
-			if ((get_time() - ph[i].last_meal) > ph[i].vars->time_to_die && ph[i].stop != 1)
+			if ((get_time() - ph[i].last_meal) > ph[i].vars->time_to_die
+				&& ph[i].stop != 1)
 			{
 				ph[i].die = 1;
 				pthread_mutex_lock(&ph[i].vars->m_checker);
-//				if (ph->vars->checker == 0)
-//				{
-					ph[i].vars->checker = 1;
-					print(&ph[i], DIE);
-					pthread_mutex_unlock(&ph[i].vars->m_checker);
-					return ((void *) NULL);
-//				}
-//				pthread_mutex_unlock(&ph[i].vars->m_checker);
+				ph[i].vars->checker = 1;
+				print(&ph[i], DIE);
+				pthread_mutex_unlock(&ph[i].vars->m_checker);
+				return ((void *) NULL);
 			}	
 			usleep(100);
-			i++;
 		}
 	}
-	return ((void *)NULL);
+	return ((void *) NULL);
 }
 
 void	*one_philo(void *ph)
