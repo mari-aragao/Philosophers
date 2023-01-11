@@ -74,6 +74,7 @@ t_philo	*init_parameters(int argc, char **argv, t_philo *ph, int total)
 	{
 		ph[i].id = i + 1;
 		ph[i].meal_cntr = 0;
+		ph[i].stop = 0;
 		ph[i].die = 0;
 		ph[i].st_time = get_time();
 		ph[i].last_meal = get_time();
@@ -101,11 +102,15 @@ int	init_threads(t_philo *ph)
 		if (pthread_create(&ph[i].th, NULL, &philo, (void *)&ph[i]) != 0)
 			return (-1);
 	}
+	if (pthread_create(&ph->vars->monitoring, NULL, &monitoring, (void *)ph) != 0)
+		return (-1);
 	i = -1;
 	while (++i < ph->vars->total)
 	{
 		if (pthread_join(ph[i].th, NULL) != 0)
 			return (-1);
 	}
+	if (pthread_join(ph->vars->monitoring, NULL) != 0)
+		return (-1);
 	return (0);
 }

@@ -50,7 +50,7 @@ int	print(t_philo *ph, int action)
 	pthread_mutex_unlock(&ph->vars->print);
 	return (0);
 }
-
+/*
 int	check_meals(t_philo *ph)
 {
 	pthread_mutex_lock(&ph->vars->m_checker);
@@ -67,7 +67,7 @@ int	check_meals(t_philo *ph)
 	pthread_mutex_unlock(&ph->vars->m_checker);
 	return (-1);
 }
-
+*/
 void	destroy_all(int total, t_philo *ph)
 {
 	int	i;

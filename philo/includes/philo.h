@@ -33,6 +33,7 @@ typedef	struct	s_vars
 	int		meals_to_make;
 	int		checker;
 	int		prt;
+	pthread_t	monitoring;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	m_checker;
@@ -44,6 +45,7 @@ typedef struct	s_philo
 	pthread_t	th;
 	int		id;
 	int		meal_cntr;
+	int		stop;
 	int		die;
 	long int	st_time;
 	long int	last_meal;
@@ -77,8 +79,8 @@ int	init_threads(t_philo *ph);
 long int	get_time(void);
 void	count_time(long int tm);
 
-void	loop_one(t_philo *ph, int for_one);
-void	loop_two(t_philo *ph, int fork_two);
+void	take_one(t_philo *ph, int for_one);
+void	take_two(t_philo *ph, int fork_two);
 void	take_forks(t_philo *ph);
 void	eating(t_philo *ph);
 void	thinking(t_philo *ph);
@@ -87,5 +89,6 @@ int	is_dead(t_philo *ph);
 void	drop_forks(t_philo *ph);
 int	checker(t_philo *ph);
 int		check_permission(t_philo *ph);
+void	*monitoring(void *ph2);
 
 #endif
